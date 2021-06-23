@@ -8,7 +8,7 @@
       "name": "aws",
       "runtime": "nodejs12.x",
       "region": "ap-northeast-2",
-      "stage": "develop",
+      "stage": "dev",
       "variableSyntax": "\\${([^{}:]+?(?:\\(|:)(?:[^:{}][^{}]*?)?)}",
       "versionFunctions": true,
       "compiledCloudFormationTemplate": {
@@ -87,7 +87,7 @@
           "MainLogGroup": {
             "Type": "AWS::Logs::LogGroup",
             "Properties": {
-              "LogGroupName": "/aws/lambda/nest-serverless-lambda-demo-develop-main"
+              "LogGroupName": "/aws/lambda/nest-serverless-lambda-demo-dev-main"
             }
           },
           "IamRoleLambdaExecution": {
@@ -116,7 +116,7 @@
                       "-",
                       [
                         "nest-serverless-lambda-demo",
-                        "develop",
+                        "dev",
                         "lambda"
                       ]
                     ]
@@ -132,7 +132,7 @@
                         ],
                         "Resource": [
                           {
-                            "Fn::Sub": "arn:${AWS::Partition}:logs:${AWS::Region}:${AWS::AccountId}:log-group:/aws/lambda/nest-serverless-lambda-demo-develop*:*"
+                            "Fn::Sub": "arn:${AWS::Partition}:logs:${AWS::Region}:${AWS::AccountId}:log-group:/aws/lambda/nest-serverless-lambda-demo-dev*:*"
                           }
                         ]
                       },
@@ -143,7 +143,7 @@
                         ],
                         "Resource": [
                           {
-                            "Fn::Sub": "arn:${AWS::Partition}:logs:${AWS::Region}:${AWS::AccountId}:log-group:/aws/lambda/nest-serverless-lambda-demo-develop*:*:*"
+                            "Fn::Sub": "arn:${AWS::Partition}:logs:${AWS::Region}:${AWS::AccountId}:log-group:/aws/lambda/nest-serverless-lambda-demo-dev*:*:*"
                           }
                         ]
                       }
@@ -157,7 +157,7 @@
                   "-",
                   [
                     "nest-serverless-lambda-demo",
-                    "develop",
+                    "dev",
                     {
                       "Ref": "AWS::Region"
                     },
@@ -174,11 +174,11 @@
                 "S3Bucket": {
                   "Ref": "ServerlessDeploymentBucket"
                 },
-                "S3Key": "serverless/nest-serverless-lambda-demo/develop/1624334770096-2021-06-22T04:06:10.096Z/nest-serverless-lambda-demo.zip"
+                "S3Key": "serverless/nest-serverless-lambda-demo/dev/1624428854679-2021-06-23T06:14:14.679Z/nest-serverless-lambda-demo.zip"
               },
-              "Handler": "_optimize/nest-serverless-lambda-demo-develop-main/src/lambda.handler",
+              "Handler": "_optimize/nest-serverless-lambda-demo-dev-main/src/lambda.handler",
               "Runtime": "nodejs12.x",
-              "FunctionName": "nest-serverless-lambda-demo-develop-main",
+              "FunctionName": "nest-serverless-lambda-demo-dev-main",
               "MemorySize": 1024,
               "Timeout": 6,
               "Role": {
@@ -192,20 +192,20 @@
               "MainLogGroup"
             ]
           },
-          "MainLambdaVersionIexeyb18h2CxbXue4Pg0aIOnwQvhd9UfyDM3sRvWj7s": {
+          "MainLambdaVersionAigXIDgJjwCv6AaCPtiHFxPNWgIDA1wGgGMWWRPU": {
             "Type": "AWS::Lambda::Version",
             "DeletionPolicy": "Retain",
             "Properties": {
               "FunctionName": {
                 "Ref": "MainLambdaFunction"
               },
-              "CodeSha256": "24dlv7Asa8ChORfvqTyT0iYQ/kJDc8wMNugxZs2D1HI="
+              "CodeSha256": "0U+l7Wo4Myra2tNVWvCak9JncD8AZeClcNlZfqUIdGE="
             }
           },
           "ApiGatewayRestApi": {
             "Type": "AWS::ApiGateway::RestApi",
             "Properties": {
-              "Name": "develop-nest-serverless-lambda-demo",
+              "Name": "dev-nest-serverless-lambda-demo",
               "EndpointConfiguration": {
                 "Types": [
                   "EDGE"
@@ -272,13 +272,13 @@
               "MethodResponses": []
             }
           },
-          "ApiGatewayDeployment1624334744690": {
+          "ApiGatewayDeployment1624428827204": {
             "Type": "AWS::ApiGateway::Deployment",
             "Properties": {
               "RestApiId": {
                 "Ref": "ApiGatewayRestApi"
               },
-              "StageName": "develop"
+              "StageName": "dev"
             },
             "DependsOn": [
               "ApiGatewayMethodAnyVarAny"
@@ -328,16 +328,16 @@
               "Ref": "ServerlessDeploymentBucket"
             },
             "Export": {
-              "Name": "sls-nest-serverless-lambda-demo-develop-ServerlessDeploymentBucketName"
+              "Name": "sls-nest-serverless-lambda-demo-dev-ServerlessDeploymentBucketName"
             }
           },
           "MainLambdaFunctionQualifiedArn": {
             "Description": "Current Lambda function version",
             "Value": {
-              "Ref": "MainLambdaVersionIexeyb18h2CxbXue4Pg0aIOnwQvhd9UfyDM3sRvWj7s"
+              "Ref": "MainLambdaVersionAigXIDgJjwCv6AaCPtiHFxPNWgIDA1wGgGMWWRPU"
             },
             "Export": {
-              "Name": "sls-nest-serverless-lambda-demo-develop-MainLambdaFunctionQualifiedArn"
+              "Name": "sls-nest-serverless-lambda-demo-dev-MainLambdaFunctionQualifiedArn"
             }
           },
           "ServiceEndpoint": {
@@ -358,12 +358,12 @@
                   {
                     "Ref": "AWS::URLSuffix"
                   },
-                  "/develop"
+                  "/dev"
                 ]
               ]
             },
             "Export": {
-              "Name": "sls-nest-serverless-lambda-demo-develop-ServiceEndpoint"
+              "Name": "sls-nest-serverless-lambda-demo-dev-ServiceEndpoint"
             }
           }
         }
@@ -452,6 +452,13 @@
       },
       "vpc": {}
     },
+    "custom": {
+      "optimize": {
+        "external": [
+          "swagger-ui-dist"
+        ]
+      }
+    },
     "plugins": [
       "serverless-plugin-typescript",
       "serverless-plugin-optimize",
@@ -460,7 +467,7 @@
     "pluginsData": {},
     "functions": {
       "main": {
-        "handler": "_optimize/nest-serverless-lambda-demo-develop-main/src/lambda.handler",
+        "handler": "_optimize/nest-serverless-lambda-demo-dev-main/src/lambda.handler",
         "events": [
           {
             "http": {
@@ -470,20 +477,20 @@
             }
           }
         ],
-        "name": "nest-serverless-lambda-demo-develop-main",
+        "name": "nest-serverless-lambda-demo-dev-main",
         "package": {
           "exclude": [
             "**"
           ],
           "include": [
-            "_optimize/nest-serverless-lambda-demo-develop-main/**"
+            "_optimize/nest-serverless-lambda-demo-dev-main/**"
           ]
         },
         "memory": 1024,
         "timeout": 6,
         "runtime": "nodejs12.x",
         "vpc": {},
-        "versionLogicalId": "MainLambdaVersionIexeyb18h2CxbXue4Pg0aIOnwQvhd9UfyDM3sRvWj7s"
+        "versionLogicalId": "MainLambdaVersionAigXIDgJjwCv6AaCPtiHFxPNWgIDA1wGgGMWWRPU"
       }
     },
     "configValidationMode": "warn",
@@ -501,13 +508,16 @@
       },
       "functions": {
         "$ref": "$[\"service\"][\"functions\"]"
+      },
+      "custom": {
+        "$ref": "$[\"service\"][\"custom\"]"
       }
     },
     "isDashboardMonitoringPreconfigured": false,
-    "artifact": "/home/debian/.develop/serverless/floaws/.build/.serverless/nest-serverless-lambda-demo.zip"
+    "artifact": "/home/debian/.develop/serverless/Nest-Serverless/.build/.serverless/nest-serverless-lambda-demo.zip"
   },
   "package": {
-    "artifactDirectoryName": "serverless/nest-serverless-lambda-demo/develop/1624334770096-2021-06-22T04:06:10.096Z",
+    "artifactDirectoryName": "serverless/nest-serverless-lambda-demo/dev/1624428854679-2021-06-23T06:14:14.679Z",
     "artifact": "nest-serverless-lambda-demo.zip"
   }
 }

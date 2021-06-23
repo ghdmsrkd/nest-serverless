@@ -10,7 +10,7 @@ provider:
   name: aws
   runtime: nodejs12.x
   region: ap-northeast-2
-  stage: develop
+  stage: dev
 
 functions:
   main: # The name of the lambda function

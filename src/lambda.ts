@@ -8,6 +8,8 @@ import { ExpressAdapter } from '@nestjs/platform-express';
 import { AppModule } from './app.module';
 
 import express = require('express');
+import { INestApplication } from '@nestjs/common';
+import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 
 // NOTE: If you get ERR_CONTENT_DECODING_FAILED in your browser, this is likely
 // due to a compressed response (e.g. gzip) which has not been handled correctly
@@ -17,6 +19,17 @@ const binaryMimeTypes: string[] = [];
 
 let cachedServer: Server;
 
+function setupSwagger(app: INestApplication) {
+  const options = new DocumentBuilder()
+    .setTitle('Tyffis API')
+    .setDescription('Tyffis REST API documentation')
+    .setVersion('1.0.0')
+    .addTag('tyffis')
+    .build();
+  const document = SwaggerModule.createDocument(app, options);
+  SwaggerModule.setup('api', app, document);
+}
+
 async function bootstrapServer(): Promise<Server> {
   if (!cachedServer) {
     const expressApp = express();
@@ -25,6 +38,7 @@ async function bootstrapServer(): Promise<Server> {
       new ExpressAdapter(expressApp),
     );
     nestApp.use(eventContext());
+    setupSwagger(nestApp);
     await nestApp.init();
     cachedServer = createServer(expressApp, undefined, binaryMimeTypes);
   }
@@ -32,8 +46,13 @@ async function bootstrapServer(): Promise<Server> {
 }
 
 export const handler: Handler = async (event: any, context: Context) => {
+  if (event.path === '/api') {
+    event.path = '/api/';
+  }
+  event.path = event.path.includes('swagger-ui')
+    ? `/api${event.path}`
+    : event.path;
+  console.log(event.path);
   cachedServer = await bootstrapServer();
-  console.log(event)
-  console.log(Context)
   return proxy(cachedServer, event, context, 'PROMISE').promise;
 };
