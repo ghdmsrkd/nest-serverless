@@ -8,9 +8,10 @@ plugins:
 
 provider:
   name: aws
-  runtime: nodejs12.x
+  runtime: nodejs14.x
   region: ap-northeast-2
   stage: dev
+  prfile: nest
 
 functions:
   main: # The name of the lambda function
@@ -20,3 +21,7 @@ functions:
       - http:
           method: any
           path: /{any+}
+
+custom:
+  optimize:
+    external: ['swagger-ui-dist']
